@@ -21,9 +21,7 @@ class Home extends Component {
     this.props.movieid(id) 
 }
 
-
  render() {
-
    return (
     <div className="App-bg">
       <Row gutter={16}>  
@@ -36,7 +34,7 @@ class Home extends Component {
                 <H2> {Items.released} </H2>
                 {<img alt="example" src= { Items.image }/>}
                 <H3> <FontAwesomeIcon icon="star" style={{color:'#f8d65b'}} /> {Items.rated} <Span1>/10</Span1></H3>
-                <Link to="/detail">
+                <Link to={"/detail/"+Items.id}>
                 <Button1 type='danger'  id={ Items.id } name={Items.id} onClick={()=>this.ClickDetail(Items.id)} >Details</Button1>
                 </Link>
                 </Cardmovie>

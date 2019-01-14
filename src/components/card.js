@@ -9,8 +9,10 @@ text-align: center;
 
 const CardDetail = styled(Card)`
 padding-top: 10px;
-width: 500px;
+width: auto;
+height: auto;
 text-align: center;
+margin-right: 65px;
 `
 
 export{
