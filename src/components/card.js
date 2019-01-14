@@ -7,6 +7,12 @@ width: 300px;
 text-align: center;
 `
 
+const CardDetail = styled(Card)`
+padding-top: 10px;
+width: 500px;
+text-align: center;
+`
+
 export{
-    Cardmovie
+    Cardmovie,CardDetail
 }

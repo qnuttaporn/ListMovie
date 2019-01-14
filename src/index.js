@@ -8,14 +8,17 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers'
 import thunk from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom'
+import Fetch from './fetch';
 
 const store = createStore(rootReducer , applyMiddleware(thunk)) //applyMiddlewareการเอาค่ามาจากที่ไหน
 
 const MyApp = () => (
   <Provider store={store}>
+  <Fetch>
     <BrowserRouter>
         <App />
     </BrowserRouter>
+  </Fetch>
   </Provider>
   
 )

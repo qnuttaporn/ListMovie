@@ -1,89 +1,70 @@
-
 import React, { Component } from 'react';
 import '../App.css';
 import 'antd/dist/antd.css';
-import { Layout,Breadcrumb } from 'antd';
-import '../App.css';
-import 'antd/dist/antd.css';
-import { Cardmovie } from '../components/card';
-import { Row, Col } from 'antd';
-import {H1,H2,H3,Span1} from '../components/Titlemv';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import {Button1} from '../components/botton'
+import { Col, Row } from 'antd';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
-const { Content } = Layout;
 
-class Details extends Component {
+import { Layout, Breadcrumb } from 'antd';
+import { Icon } from 'antd';
+import { CardDetail } from '../components/card';
+import { Rate } from 'antd';
+import {H2,H3,Span1,H4,H5} from '../components/Titlemv';
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+
+const {  Content, Footer } = Layout;
+class detailHome extends Component {
 
   state = {
     data: []
   }
 
-  componentDidMount = () => {
-    fetch('http://www.mocky.io/v2/5c3724b83000009d001f6253')
-    .then(res => res.json())
-    .then((response) => {
-        this.props.datamovie(response.movies) //ส่งค่าไปยังmapDispatchToProps
-      })
-   }
-  
-   
-    render() {
-      return (
-        <Layout className="layout">
-        <Content style={{ padding: '20px' }}>
-          <Breadcrumb style={{textAlign:"center"}}>
-            <Breadcrumb.Item>SUPERMAN</Breadcrumb.Item>
-          </Breadcrumb>
-          <div style={{ background: '#fff', padding: 20, minHeight: 280 }}>
-          <div>
-              <Row gutter={16}>{
-              this.props.movie.map(Item => (
-                    <Col className="gutter-row" span={6}>
-                    <div className="gutter">
-                    <Cardmovie bordered={ false }  hoverable>
-                      <H1> { Item.name } </H1> 
-                      <H2> {Item.released} </H2>
-                      {<img alt="example" src= { Item.image }/>}
-                      <H3> <FontAwesomeIcon icon="star" style={{color:'#f8d65b'}} /> {Item.rated} <Span1>/10</Span1></H3>
-                      <Link to="/detail">
-                          {/* <Button1 type='danger' name={ Item.id } onClick={this.ClickDetail} id={ Item.id }>Details</Button1> */}
-                      </Link>
-                      </Cardmovie>
-                      </div>
-                    </Col>
-              ))
-            }
-            </Row>
-     </div>
+  render() {
+    console.log(this.props.dataid)
 
-          </div>
-        </Content>
-        {/* <Footer style={{ textAlign: 'center' }}>
-        </Footer> */}
-      </Layout>
-      );
+    const movie = this.props.movies.filter(movie => this.props.dataid === movie.id)[0];
+
+    return (
+      <Layout className="layout">
+      <Content style={{ padding: '0 50px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Movie Titles</Breadcrumb.Item>
+          <Breadcrumb.Item>{movie.name}</Breadcrumb.Item>
+        </Breadcrumb>
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <Row>
+            <Col span={16} push={6}>  
+              <CardDetail>
+                <H4> { movie.name } </H4> 
+                <H5> {movie.released} </H5>
+                <H2>
+                เรื่องย่อ  : {movie.name} ({movie.released}) ฝังแค้นพยัคฆ์ระห่ำเรื่องราวของ ทนายความที่พูดเร็วเปลี่ยนร่างกายของเขาและรับปากเงียบไม่ให้ความแตกจนกว่าเขาจะพบว่าใครฆ่าภรรยา และลูกสาวของเขาและมีการแก้แค้นของเขาได้สำเร็จ ฝังแค้นพยัคฆ์ระห่ำ
+                </H2>
+                <H3> <Rate disabled defaultValue={movie.rated} /> {movie.rated} <Span1>/10</Span1></H3>
+                <Icon type="caret-right" />
+              </CardDetail>
+            </Col>
+            <Col span={6} pull={16}> 
+              <img className="picture" alt="example" src= { movie.image }></img>
+            </Col>
+          </Row>
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>
+        Good Movie By Nuttaporn
+      </Footer>
+    </Layout>
+    );
     }
-   
-  }
-   
-  const mapStateToProps = state => ({
-    movie: state.checktype //movie ขื่ออะไรก็ได้เอาไป.ใช้
+}
+const mapStateToProps = state => ({
+    movies: state.checktype,
+    dataid: state.checkid
   })
-  
-  const mapDispatchToProps = dispatch => ({
-    datamovie(res){
-      dispatch({
-        type: "API",
-        data: res
-      })
-    }
-  })
-  export default connect (
-    mapStateToProps,
-    mapDispatchToProps
-  )(Details);
-  library.add(faStar)
+
+export default connect ( //สามารถส่งได้ 2 ตัว และสามารถเชื่อมต่อกับredux ได้ 
+  mapStateToProps,
+  null
+  )(detailHome);
+library.add(faStar)

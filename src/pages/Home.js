@@ -15,19 +15,11 @@ class Home extends Component {
 
  state = {
    data: []
- }
+  }
 
- componentDidMount = () => {
-  fetch('http://www.mocky.io/v2/5c3724b83000009d001f6253')
-  .then(res => res.json())
-  .then((response) => {
-      this.props.datamovie(response.movies) //ส่งค่าไปยังmapDispatchToProps
-    })
- }
-
-//  ClickDetail = (e) =>{
-//     this.props.idmovie(e.target.id) 
-// }
+ ClickDetail = (id) =>{
+    this.props.movieid(id) 
+}
 
 
  render() {
@@ -36,17 +28,16 @@ class Home extends Component {
     <div className="App-bg">
       <Row gutter={16}>  
        {
-        this.props.movie.map(Item => (
+        this.props.movies.map(Items => (
               <Col className="gutter-row" span={6}>
               <div className="gutter">
               <Cardmovie bordered={ false }  hoverable>
-                <H1> { Item.name } </H1> 
-                <H2> {Item.released} </H2>
-                {<img alt="example" src= { Item.image }/>}
-                <H3> <FontAwesomeIcon icon="star" style={{color:'#f8d65b'}} /> {Item.rated} <Span1>/10</Span1></H3>
+                <H1> { Items.name } </H1> 
+                <H2> {Items.released} </H2>
+                {<img alt="example" src= { Items.image }/>}
+                <H3> <FontAwesomeIcon icon="star" style={{color:'#f8d65b'}} /> {Items.rated} <Span1>/10</Span1></H3>
                 <Link to="/detail">
-                <Button1 type='danger'>Details</Button1>
-                    {/* <Button1 type='danger' name={ Item.id } onClick={this.ClickDetail} id={ Item.id }>Details</Button1> */}
+                <Button1 type='danger'  id={ Items.id } name={Items.id} onClick={()=>this.ClickDetail(Items.id)} >Details</Button1>
                 </Link>
                 </Cardmovie>
                 </div>
@@ -62,17 +53,18 @@ class Home extends Component {
 }
     
 const mapStateToProps = state => ({
-  movie: state.checktype //movie ขื่ออะไรก็ได้เอาไป.ใช้
+  movies: state.checktype //movie ขื่ออะไรก็ได้เอาไป.ใช้
 })
 
 const mapDispatchToProps = dispatch => ({
-  datamovie(res){
-    dispatch({
-      type: "API",
-      data: res
-    })
+  movieid(responseid){
+  dispatch({
+    type: "ID",
+    responseid: responseid
+  })
   }
 })
+
 export default connect (
   mapStateToProps,
   mapDispatchToProps
