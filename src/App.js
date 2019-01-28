@@ -17,7 +17,7 @@ class App extends Component {
         {/* <nav className="navbar is-light" role="navigation" aria-label="main navigation"> */}
           <div className="container">
             <div className="navbar-menu">
-            <Link to="/">
+            <Link to="/">jjjjjjjjj
               <Tabs defaultActiveKey="1" onChange={callback}>
                   <TabPane tab="Home" key="1">
                   </TabPane>
